@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/Rusgyn/iss_spotter#readme",
   "dependencies": {
+    "needle": "^3.3.1",
     "request": "^2.88.2"
   }
 }
