@@ -12,16 +12,23 @@ const needle = require("needle");
 const URL = 'https://api.ipify.org?format=json';
 
 const fetchMyIP = function(callback) {
-  // use request to fetch IP address from JSON API
-  needle(URL, (error, _response, body) => {
+  //use request to fetch IP address from JSON API
+  needle(URL, (error, response, body) => {
     if (error) {
-      callback(error, null);
-    } else {
-      const myIP = body.ip;
-      callback(null, myIP);
+      return callback(error, null);
+    } 
+    
+    // if non-200 status, assume server error
+    if (response.statusCode !== 200) {
+       const msg = `Server Code ${response.statusCode} when fetching IP. Response: ${body}`;
+       return callback(msg, null);
     }
+    
+    // if all's well and we got the data
+    const myIP = body.ip;
+    return callback(null, myIP);
   });
+
 };
 
 module.exports = { fetchMyIP };
-//fetchMyIP();
