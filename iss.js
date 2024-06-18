@@ -16,12 +16,12 @@ const fetchMyIP = function(callback) {
   needle(URL, (error, response, body) => {
     if (error) {
       return callback(error, null);
-    } 
+    }
     
     // if non-200 status, assume server error
     if (response.statusCode !== 200) {
-       const msg = `Server Code ${response.statusCode} when fetching IP. Response: ${body}`;
-       return callback(msg, null);
+      const msg = `Server Code ${response.statusCode} when fetching IP: ${body}`;
+      return callback(Error(msg), null);
     }
     
     // if all's well and we got the data
