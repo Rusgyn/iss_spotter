@@ -48,23 +48,26 @@ const fetchCoordsByIP = function(ip, callback) {
 
   const url = `http://ipwho.is/${ip}`;
 
-  needle(url,(error, _response, body) => {
+  needle(url,(error, response, body) => {
     if(error) {
       return callback(error, null);
     } 
     
+    // if non-200 status, assume server error
+    if (response.statusCode !== 200) {
+      const msg = `Server Code ${response.statusCode} when fetching IP: ${body}`;
+      return callback(Error(msg), null);
+    }
+
     if (!body.success) {
       const message = `Success status was ${body.success}. Server message says: ${body.message} when fetching for IP ${body.ip}`;
       return callback(Error(message), null);
     } 
 
     const coords = {
-      latitude: "",
-      longitude: ""
+      latitude: body.latitude,
+      longitude: body.longitude
     }
-
-    coords.latitude = body.latitude;
-    coords.longitude = body.longitude
 
     return callback(null, coords);
 
