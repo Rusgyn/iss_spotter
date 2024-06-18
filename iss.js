@@ -13,6 +13,7 @@ const URL = 'https://api.ipify.org?format=json';
 
 const fetchMyIP = function(callback) {
   //use request to fetch IP address from JSON API
+  //using `needle()` provides the response body already parsed as a JavaScript object when the response is JSON.
   needle(URL, (error, response, body) => {
     if (error) {
       return callback(error, null);
