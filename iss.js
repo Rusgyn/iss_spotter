@@ -32,4 +32,12 @@ const fetchMyIP = function(callback) {
 
 };
 
-module.exports = { fetchMyIP };
+// Script that fetch Geo coordinates by IP address.
+const fetchCoordsByIP = function(ip, callback) {
+
+}
+
+module.exports = {
+  fetchMyIP,
+  fetchCoordsByIP
+};
