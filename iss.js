@@ -33,8 +33,42 @@ const fetchMyIP = function(callback) {
 };
 
 // Script that fetch Geo coordinates by IP address.
+/**
+ * Makes a single API request to retrieve the lat/lng for a given IPv4 address.
+ * Input:
+ *   - The ip (ipv4) address (string)
+ *   - A callback (to pass back an error or the lat/lng object)
+ * Returns (via Callback):
+ *   - An error, if any (nullable)
+ *   - The lat and lng as an object (null if error). Example:
+ *     { latitude: '49.27670', longitude: '-123.13000' }
+ */
+
 const fetchCoordsByIP = function(ip, callback) {
 
+  const url = `http://ipwho.is/${ip}`;
+
+  needle(url,(error, _response, body) => {
+    if(error) {
+      return callback(error, null);
+    } 
+    
+    if (!body.success) {
+      const message = `Success status was ${body.success}. Server message says: ${body.message} when fetching for IP ${body.ip}`;
+      return callback(Error(message), null);
+    } 
+
+    const coords = {
+      latitude: "",
+      longitude: ""
+    }
+
+    coords.latitude = body.latitude;
+    coords.longitude = body.longitude
+
+    return callback(null, coords);
+
+  })
 }
 
 module.exports = {
