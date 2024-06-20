@@ -9,7 +9,6 @@ const printPassTimes = function(passTimes) {
   }
 }
 
-
 nextISSTimesForMyLocation()
-  .then((body) => printPassTimes(body))
-  .catch((error) => console.log(error));
+  .then((thePassTimes) => printPassTimes(thePassTimes))
+  .catch((error) => console.log("There is an error: ", error.message));
