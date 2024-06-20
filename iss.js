@@ -9,9 +9,8 @@
 
 const needle = require("needle");
 
-const URL = 'https://api.ipify.org?format=json';
-
 const fetchMyIP = function(callback) {
+  const URL = 'https://api.ipify.org?format=json';
   //use request to fetch IP address from JSON API
   //using `needle()` provides the response body already parsed as a JavaScript object when the response is JSON.
   needle(URL, (error, response, body) => {
@@ -114,7 +113,24 @@ const fetchISSFlyOverTimes = function(coords, callback) {
  *     [ { risetime: <number>, duration: <number> }, ... ]
  */ 
 const nextISSTimesForMyLocation = function(callback) {
-  // empty for now
+
+  fetchMyIP((error, ip) => {
+    if (error) {
+      return callback(error, null);
+    }
+    fetchCoordsByIP(ip, (error, coordinates) => {
+      if (error) {
+        return callback(error, null);
+      }
+      fetchISSFlyOverTimes(coordinates, (error, passTimes) => {
+        if (error) {
+          return callback(error, null);
+        }
+        callback(error, passTimes);
+      })
+    })
+  })
+
 };
 
 module.exports = {
