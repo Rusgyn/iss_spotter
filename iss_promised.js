@@ -61,14 +61,14 @@ const fetchISSFlyOverTimes = function(coordinates) {
     });
 };
 
-const nextISSTimesForMyLocation = function(passTimes) {
- return fetchMyIP()
-  .then((ip) => fetchCoordsByIP(ip))
-  .then((coordinates) => fetchISSFlyOverTimes(coordinates))
-  .then((passTimes) => {
-    return passTimes;
-  })
-}
+const nextISSTimesForMyLocation = function() {
+  return fetchMyIP()
+    .then((ip) => fetchCoordsByIP(ip))
+    .then((coordinates) => fetchISSFlyOverTimes(coordinates))
+    .then((passTimes) => {
+      return passTimes;
+    });
+};
 
 module.exports = {
   nextISSTimesForMyLocation
