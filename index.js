@@ -1,38 +1,19 @@
 // index.js
-const { fetchMyIP, fetchCoordsByIP, fetchISSFlyOverTimes } = require('./iss');
+const { nextISSTimesForMyLocation } = require('./iss');
 
-fetchMyIP((error, ip) => {
-  if (error) {
-    console.log("It didn't work!" , error);
-    return;
+const printPassTimes = function(passTimes) {
+  for (const pass of passTimes) {
+    const datetime = new Date(0);
+    datetime.setUTCSeconds(pass.risetime);
+    const duration = pass.duration;
+    console.log(`Next pass at ${datetime} for ${duration} seconds!`);
   }
-
-  console.log('It worked! Returned IP:' , ip);
-});
-
-// The code below is temporary and can be commented out.
-// The xxx.xxx.xxx.xxx is your location IP address. You can use http://ipwho.is/ to get your IP address.
-fetchCoordsByIP('xxx.xxx.xxx.xxx', (error, coordinates) => {
-  if (error) {
-    console.log("It didn't work!" , error);
-    return;
-  }
-
-  console.log('It worked! Returned IP:' , coordinates);
-  return;
-});
-
-//The xxx stands your location coordinates. You can use http://ipwho.is/ to get your latitude and longitude.
-const coords = {
-  latitude: 'xxx',
-  longitude: 'xxx'
 };
-fetchISSFlyOverTimes(coords, (error, passTimes) => {
-  if (error) {
-    console.log("It didn't work!" , error);
-    return;
-  }
 
-  console.log('It worked! Returned IP:' , passTimes);
-  return;
+nextISSTimesForMyLocation((error, passTimes) => {
+  if (error) {
+    return console.log("It didn't work!", error);
+  }
+  // success, print out the deets!
+  printPassTimes(passTimes);
 });
