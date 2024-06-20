@@ -63,7 +63,7 @@ const fetchISSFlyOverTimes = function(coordinates) {
 
 const nextISSTimesForMyLocation = function() {
   return fetchMyIP()
-    .then((ip) => fetchCoordsByIP(ip))
+    .then((ip) => fetchCoordsByIP())
     .then((coordinates) => fetchISSFlyOverTimes(coordinates))
     .then((passTimes) => {
       return passTimes;
