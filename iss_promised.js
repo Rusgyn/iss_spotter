@@ -53,7 +53,7 @@ const fetchISSFlyOverTimes = function(coordinates) {
   return needle('get', `https://iss-flyover.herokuapp.com/json/?lat=${coordinates.latitude}&lon=${coordinates.longitude}`)
     .then((response) => {
       const body = response.body;
-      const passTimes = body.response; //// changed the name from response to passTimes for clarification
+      const passTimes = body.response; //changed the name from response to passTimes for clarification
       return passTimes;
     })
     .catch((error) => {
